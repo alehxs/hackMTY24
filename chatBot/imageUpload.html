@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 20px auto;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image</h1>
+        <form id="uploadForm">
+            <input type="file" id="imageFile" name="image" accept="image/*" required>
+            <button type="submit">Upload Image</button>
+        </form>
+        <div id="response"></div>
+    </div>
+
+    <script>
+       document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const formData = new FormData();
+        const fileInput = document.getElementById('imageFile');
+        formData.append('image', fileInput.files[0]);
+        
+        try {
+            console.log('Uploading image...');
+            const response = await fetch('http://127.0.0.1:5000/upload', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            
+            const result = await response.json();
+            console.log('Response received:', result);
+
+            // Check if the response contains the expected data
+            if (result.choices && result.choices.length > 0) {
+                const message = result.choices[0].message.content;
+                document.getElementById('response').innerText = message;
+            } else {
+                document.getElementById('response').innerText = 'Unexpected response format';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('response').innerText = 'Error: ' + error.message;
+        }
+    });
+    </script>
+</body>
+</html>
