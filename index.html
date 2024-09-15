@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depth Prediction Test</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@600&display=swap"> <!-- Font import -->
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">infra</div>
+    </nav>
+
+    <h1>Upload Your Image</h1>
+
+    <div class="file-drop-area">
+        <input 
+            id="fileInput" 
+            type="file" 
+            accept=".jpg, .png" 
+            onchange="handleFileChange(event)" 
+            hidden
+        />
+        <label for="fileInput" class="file-label">
+            <p>Drag and drop your file here or click to upload</p>
+            <p class="file-caption">Accepted file types: .jpg, .png (Max 5MB)</p>
+        </label>
+        <img id="previewImage" class="image-preview" alt="Image Preview" />
+        <p id="fileName" class="file-name"></p>
+    </div>
+
+    <p id="error" class="error"></p>
+    <button id="submitButton" class="button" onclick="handleSubmit()">Submit</button>
+
+    <!-- 3D Model and Chatbot Buttons -->
+    <div class="button-group">
+        <button id="modelButton" class="button" onclick="redirectTo3DModel()">3D Model</button>
+        <button id="chatbotButton" class="button" onclick="showChatbotText()">Chatbot</button>
+    </div>
+
+    <!-- Hidden Chatbot Text -->
+    <div id="chatbotText" class="chatbox-text" style="display: none;">
+        <p>Roadway Collapse: A section of the road has broken away, creating a gap.</p>
+        <p>Cracking and Displacement: Large cracks and uneven surfaces are visible, indicating structural failure.</p>
+        <p>Debris: Portions of the road and materials are strewn at the edge of the collapse, suggesting a disintegration of the pavement and underlying structure.</p>
+    </div>
+
+    <!-- Input Box for User Data -->
+    <img id="outputImage" alt="" style="display: none; max-width: 100%; margin-top: 20px; border-radius: 10px;">
+
+    <script src="script.js"></script> <!-- Link to external JS file -->
+</body>
+</html>
